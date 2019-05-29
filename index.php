@@ -26,7 +26,7 @@ $db = new DB_Helper();
 
 <body>
 <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-white portfolio-navbar gradient">
-    <div class="container"><a class="navbar-brand logo" href="#">Dropshipping items</a>
+    <div class="container"><a class="navbar-brand logo" href="./">Dropshipping items</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
@@ -51,56 +51,69 @@ $db = new DB_Helper();
         <div class="col-sm-4">
 
             <?php
-            if (isset($_FILES['image']) && isset($_POST['item-name'])) { // If image is set
-                $fileName = "";
-                $sku = "";
-                $itemURL1688 = "";
-                $price1688 = "";
-                $weightKG = "";
-                $imageName = "";
+            if (!isset($_GET['edit-submitted-id'])) { // If edit id is not passed (INSERT)
+                if (isset($_FILES['image']) && isset($_POST['item-name'])) { // If image is set
+                    $fileName = "";
+                    $sku = "";
+                    $itemURL1688 = "";
+                    $price1688 = "";
+                    $weightKG = "";
+                    $imageName = "";
 
-                $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
-                $sku = "ESH".str_ireplace(".","",microtime()); // Generating our SKU
+                    $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
+                    $sku = "ESH" . str_ireplace(".", "", microtime()); // Generating our SKU
 
-                $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
-                $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
-                $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
+                    $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
+                    $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
+                    $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
 
-                $errors = array();
-                $imageName = $_FILES['image']['name'];
-                $file_size = $_FILES['image']['size'];
-                $file_tmp = $_FILES['image']['tmp_name'];
-                $file_type = $_FILES['image']['type'];
+                    $errors = array();
+                    $imageName = $_FILES['image']['name'];
+                    $file_size = $_FILES['image']['size'];
+                    $file_tmp = $_FILES['image']['tmp_name'];
+                    $file_type = $_FILES['image']['type'];
 
 
-                $explodeVariable = explode('.', $imageName);
-                $toMakeLowerCase = end($explodeVariable);
-                $file_ext = strtolower($toMakeLowerCase);
+                    $explodeVariable = explode('.', $imageName);
+                    $toMakeLowerCase = end($explodeVariable);
+                    $file_ext = strtolower($toMakeLowerCase);
 
-                $extensions = array("jpeg", "jpg", "png", "gif", "svg");
+                    $extensions = array("jpeg", "jpg", "png", "gif", "svg");
 
-                $finalFileName = mysqli_real_escape_string($db->conn, $fileName) . "_" . microtime() . "_" . $file_ext;
-                $finalFilePath = "item_images/" . $finalFileName;
+                    $finalFileName = mysqli_real_escape_string($db->conn, $fileName) . "_" .str_ireplace(".", "", microtime()) . "." . $file_ext;
+                    $finalFilePath = "item_images/" . $finalFileName;
 
-                if (in_array($file_ext, $extensions) === false) {
-                    $errors[] = "extension not allowed, please choose a JPEG or PNG file. \n";
-                }
+                    if (in_array($file_ext, $extensions) === false) {
+                        $errors[] = "extension not allowed, please choose a JPEG or PNG file. \n";
+                    }
 
-//                if ($file_size > 2097152) { File size must be excately 2 MB'
-                if ($file_size > 5084597152) {
-                    $errors[] = 'File too large. \n';
-                }
+                    if ($file_size > 5084597152) {
+                        $errors[] = 'File too large. \n';
+                    }
 
-                if (empty($errors) == true) {
-                    if (move_uploaded_file($file_tmp, $finalFilePath)) {
-                        $insert = mysqli_query($db->conn, "INSERT INTO items (item_name,item_url_1688,our_sku, item_image,item_price_yuan,item_weight_kg,date_added) VALUES ('$fileName','$itemURL1688','$sku','$finalFilePath','$price1688','$weightKG','$db->date')");
-                        if ($insert) {
-                            $_SESSION['response_code'] = "1";
-                            $_SESSION['response_message'] = "Item added successfully!";
+                    if (empty($errors) == true) {
+                        if (move_uploaded_file($file_tmp, $finalFilePath)) {
+                            $insert = mysqli_query($db->conn, "INSERT INTO items (item_name,item_url_1688,our_sku, item_image,item_price_yuan,item_weight_kg,date_added) VALUES ('$fileName','$itemURL1688','$sku','$finalFilePath','$price1688','$weightKG','$db->date')");
+                            if ($insert) {
+                                $_SESSION['response_code'] = "1";
+                                $_SESSION['response_message'] = "Item added successfully!";
+                            } else {
+                                $_SESSION['response_code'] = "0";
+                                $_SESSION['response_message'] = "Item could not be added!";
+                            }
                         } else {
-                            $_SESSION['response_code'] = "0";
-                            $_SESSION['response_message'] = "Item could not be added!";
+                            $finalFilePath = ""; // No image name
+                            $insert = mysqli_query($db->conn, "INSERT INTO items (item_name,item_url_1688,our_sku, item_image,item_price_yuan,item_weight_kg,date_added) VALUES ('$fileName','$itemURL1688','$sku','$finalFilePath','$price1688','$weightKG','$db->date')");
+                            if ($insert) {
+                                $_SESSION['response_code'] = "1";
+                                $_SESSION['response_message'] = "Item added successfully!";
+                            } else {
+                                $_SESSION['response_code'] = "0";
+                                $_SESSION['response_message'] = "Item could not be added!";
+                            }
+
                         }
+
                     } else {
                         $finalFilePath = ""; // No image name
                         $insert = mysqli_query($db->conn, "INSERT INTO items (item_name,item_url_1688,our_sku, item_image,item_price_yuan,item_weight_kg,date_added) VALUES ('$fileName','$itemURL1688','$sku','$finalFilePath','$price1688','$weightKG','$db->date')");
@@ -114,34 +127,195 @@ $db = new DB_Helper();
 
                     }
 
-                } else {
+
+                    echo "<br />";
+                } elseif (isset($_POST['item-name'])) { // If image is not set
+
+                    $fileName = "";
+                    $sku = "";
+                    $itemURL1688 = "";
+                    $price1688 = "";
+                    $weightKG = "";
+
+                    $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
+                    $sku = "ESH" . str_ireplace(".", "", microtime());
+                    $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
+                    $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
+                    $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
+
                     $finalFilePath = ""; // No image name
-                    $insert = mysqli_query($db->conn, "INSERT INTO items (item_name,item_url_1688,our_sku, item_image,item_price_yuan,item_weight_kg,date_added) VALUES ('$fileName','$itemURL1688','$sku','$finalFilePath','$price1688','$weightKG','$db->date')");
-                    if ($insert) {
+                    $update = mysqli_query($db->conn, "UPDATE items SET
+item_name = '$fileName',
+item_url_1688 = '$itemURL1688',
+our_sku = '$sku',
+item_image = '$finalFilePath',
+item_price_yuan = '$price1688',
+item_weight_kg = '$weightKG',
+date_added = '$db->date'
+
+WHERE id = '$item_id'
+");
+                    if ($update) {
                         $_SESSION['response_code'] = "1";
-                        $_SESSION['response_message'] = "Item added successfully!";
+                        $_SESSION['response_message'] = "Item updated successfully!";
                     } else {
                         $_SESSION['response_code'] = "0";
-                        $_SESSION['response_message'] = "Item could not be added!";
+                        $_SESSION['response_message'] = "Item could not be updated!";
+                    }
+                }
+            } elseif (isset($_GET['edit-submitted-id']) && !empty(trim($_GET['edit-submitted-id']))) { // If edit id is passed (UPDATE)
+
+                $item_id = mysqli_real_escape_string($db->conn, $_GET['edit-submitted-id']);
+                if (isset($_FILES['image']) && isset($_POST['item-name'])) { // If image is set
+                    $fileName = "";
+                    $itemURL1688 = "";
+                    $price1688 = "";
+                    $weightKG = "";
+                    $imageName = "";
+
+                    $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
+
+                    $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
+                    $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
+                    $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
+
+                    $errors = array();
+                    $imageName = $_FILES['image']['name'];
+                    $file_size = $_FILES['image']['size'];
+                    $file_tmp = $_FILES['image']['tmp_name'];
+                    $file_type = $_FILES['image']['type'];
+
+
+                    $explodeVariable = explode('.', $imageName);
+                    $toMakeLowerCase = end($explodeVariable);
+                    $file_ext = strtolower($toMakeLowerCase);
+
+                    $extensions = array("jpeg", "jpg", "png", "gif", "svg");
+
+                    $finalFileName = mysqli_real_escape_string($db->conn, $fileName) . "_" .str_ireplace(".", "", microtime()) . "." . $file_ext;
+                    $finalFilePath = "item_images/" . $finalFileName;
+
+                    if (in_array($file_ext, $extensions) === false) {
+                        $errors[] = "extension not allowed, please choose a JPEG or PNG file. \n";
+                    }
+
+                    if ($file_size > 5084597152) {
+                        $errors[] = 'File too large. \n';
+                    }
+
+                    if (empty($errors) == true) {
+                        $imageOfItem = "";
+                        if (move_uploaded_file($file_tmp, $finalFilePath)) {
+
+                            $fetchImage = mysqli_query($db->conn, "SELECT item_image FROM items WHERE id = '$item_id'");
+                            if (mysqli_num_rows($fetchImage) > 0) {
+                                $row = mysqli_fetch_array($fetchImage);
+                                $imageOfItem = $row['item_image'];
+
+                            }
+                            unlink($imageOfItem);
+
+                            $update = mysqli_query($db->conn, "UPDATE items SET
+item_name = '$fileName',
+item_url_1688 = '$itemURL1688',
+item_image = '$finalFilePath',
+item_price_yuan = '$price1688',
+item_weight_kg = '$weightKG',
+date_added = '$db->date'
+
+WHERE id = '$item_id'
+");
+                            if ($update) {
+                                $_SESSION['response_code'] = "1";
+                                $_SESSION['response_message'] = "Item updated successfully!";
+                            } else {
+                                $_SESSION['response_code'] = "0";
+                                $_SESSION['response_message'] = "Item could not be updated!";
+                            }
+                        } else {
+                            $finalFilePath = ""; // No image name
+                            $update = mysqli_query($db->conn, "UPDATE items SET
+item_name = '$fileName',
+item_url_1688 = '$itemURL1688',
+item_image = '$finalFilePath',
+item_price_yuan = '$price1688',
+item_weight_kg = '$weightKG',
+date_added = '$db->date'
+
+WHERE id = '$item_id'
+
+");
+                            if ($update) {
+                                $_SESSION['response_code'] = "1";
+                                $_SESSION['response_message'] = "Item updated successfully!";
+                            } else {
+                                $_SESSION['response_code'] = "0";
+                                $_SESSION['response_message'] = "Item could not be updated!";
+                            }
+
+                        }
+
+                    } else {
+                        $finalFilePath = ""; // No image name
+                        $update = mysqli_query($db->conn, "UPDATE items SET
+item_name = '$fileName',
+item_url_1688 = '$itemURL1688',
+item_image = '$finalFilePath',
+item_price_yuan = '$price1688',
+item_weight_kg = '$weightKG',
+date_added = '$db->date'
+
+WHERE id = '$item_id'
+");
+                        if ($update) {
+                            $_SESSION['response_code'] = "1";
+                            $_SESSION['response_message'] = "Item updated successfully!";
+                        } else {
+                            $_SESSION['response_code'] = "0";
+                            $_SESSION['response_message'] = "Item could not be updated!";
+                        }
+
+                    }
+
+
+                    echo "<br />";
+                } elseif (isset($_POST['item-name'])) { // If image is not set
+
+                    $fileName = "";
+                    $itemURL1688 = "";
+                    $price1688 = "";
+                    $weightKG = "";
+                    $imageName = "";
+
+                    $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
+
+                    $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
+                    $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
+                    $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
+
+
+                    $finalFilePath = ""; // No image name
+                    $update = mysqli_query($db->conn, "UPDATE items SET
+item_name = '$fileName',
+item_url_1688 = '$itemURL1688',
+item_image = '$finalFilePath',
+item_price_yuan = '$price1688',
+item_weight_kg = '$weightKG',
+date_added = '$db->date'
+
+WHERE id = '$item_id'
+");
+                    if ($update) {
+                        $_SESSION['response_code'] = "1";
+                        $_SESSION['response_message'] = "Item updated successfully!";
+                    } else {
+                        $_SESSION['response_code'] = "0";
+                        $_SESSION['response_message'] = "Item could not be updated!";
                     }
 
                 }
 
 
-                echo "<br />";
-            } elseif (isset($_POST['item-name'])) { // If image is not set
-
-                $fileName = "";
-                $sku = "";
-                $itemURL1688 = "";
-                $price1688 = "";
-                $weightKG = "";
-
-                $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
-                $sku = "ESH".str_ireplace(".","",microtime());
-                $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
-                $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
-                $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
             }
             echo "<br />";
             include_once('include/include_response_div.php');
@@ -152,29 +326,60 @@ $db = new DB_Helper();
                 <h2>Add items</h2>
             </div>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="<?php if (isset($_GET['edit-id']) && !empty(trim($_GET['edit-id']))) {
+                echo "./?edit-submitted-id=" . $_GET['edit-id'];
+            } else {
+                echo "./";
+            } ?>" method="POST" enctype="multipart/form-data">
+                <?php
+                $fileName = "";
+                $itemURL1688 = "";
+                $price1688 = "";
+                $weightKG = "";
+
+                if (isset($_GET['edit-id']) && !empty(trim($_GET['edit-id']))) {
+                    $item_id_now = mysqli_real_escape_string($db->conn, $_GET['edit-id']);
+
+                    $fetchItems = mysqli_query($db->conn, "SELECT * FROM items WHERE id = '$item_id_now'");
+                    if (mysqli_num_rows($fetchItems) > 0) {
+                        $row = mysqli_fetch_array($fetchItems);
+                        $editRequest = true;
+
+                        $fileName = $row['item_name'];
+                        $itemURL1688 = $row['item_url_1688'];
+                        $price1688 = $row['item_price_yuan'];
+                        $weightKG = $row['item_weight_kg'];
+                        $imageName = $row['item_image'];
+
+                    } else {
+                        $editRequest = false;
+                    }
+                } else {
+                    $editRequest = false;
+                }
+                ?>
                 <div class="form-group">
                     <label for="name">Item name:</label>
-                    <input class="form-control item" type="text" name="item-name"/>
+                    <input class="form-control item" type="text" value="<?php if($editRequest){echo $fileName;} ?>" name="item-name"/>
                 </div>
                 <div class="form-group">
-                    <label for="email">1688 URL:</label>
-                    <input class="form-control item" type="text" name="item-url-1688"/>
+                    <label for="email">Vendor's item URL:</label>
+                    <input class="form-control item" value="<?php if($editRequest){echo $itemURL1688;} ?>" type="text" name="item-url-1688"/>
                 </div>
                 <div class="form-group">
                     <label for="email">Item price (Yuan)</label>
-                    <input class="form-control item" type="text" name="price-1688"/>
+                    <input class="form-control item" value="<?php if($editRequest){echo $price1688;} ?>" type="text" name="price-1688"/>
                 </div>
                 <div class="form-group">
                     <label for="email">Item weight (KG)</label>
-                    <input class="form-control item" type="text" name="weight-kg"/>
+                    <input class="form-control item" value="<?php if($editRequest){echo $weightKG;} ?>" type="text" name="weight-kg"/>
                 </div>
                 <div class="form-group">
                     <label for="email">Item image</label>
-                    <input class="form-control item" type="file" name="image"/>
+                    <input class="form-control item" value="<?php if($editRequest){echo $imageName;} ?>" type="file" name="image"/>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-lg" type="submit">ADD</button>
+                    <button class="btn btn-primary btn-block btn-lg" type="submit"> <?php if($editRequest){echo "UPDATE";}else{echo "ADD";} ?></button>
                 </div>
             </form>
         </div>
@@ -187,12 +392,11 @@ $db = new DB_Helper();
                     <th>Our SKU</th>
                     <th>Item price (Yuan)</th>
                     <th>Item weight (KG)</th>
-                    <th>Item URL (1688)</th>
+                    <th>Vendor's item</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-
 
                 <?php
 
@@ -204,7 +408,6 @@ $db = new DB_Helper();
 
                 $start_at = 0;
                 $length_to_pick = 5000000000000000000000000000000000;
-
 
                 try {
                     $fetch_items = $db->fetchItemsWithSearch($start_at, $search_keyword, $length_to_pick);
@@ -220,15 +423,24 @@ $db = new DB_Helper();
                         ?>
 
                         <tr>
-                            <td><center><a target="_blank" href="<?php echo $item_image; ?>"><img style="max-height: 80px;" src="<?php echo $item_image; ?>"/></a></center></td>
+                            <td>
+                                <center><a target="_blank" href="<?php echo $item_image; ?>"><img
+                                            style="max-height: 80px;" src="<?php echo $item_image; ?>"/></a></center>
+                            </td>
                             <td><?php echo $item_name; ?></td>
                             <td><?php echo $our_sku; ?></td>
                             <td><?php echo $item_price_yuan; ?></td>
                             <td><?php echo $item_weight_kg; ?></td>
-                            <td><a target="_blank" href="<?php echo $item_url_1688; ?>"><button class="btn btn-primary">Click here</button></a></td>
+                            <td><a target="_blank" href="<?php echo $item_url_1688; ?>">
+                                    <button class="btn btn-primary">Click here</button>
+                                </a></td>
                             <td>
-                                <button onclick="window.location='index.php?edit-id='+<?php echo $item_id; ?>" class="btn btn-success">Edit</button>
-                                <button onclick="return(comfirm('Are you sure to delete?'))" class="btn btn-danger">Delete</button>
+                                <button onclick="window.location='index.php?edit-id='+<?php echo $item_id; ?>"
+                                        class="btn btn-success">Edit
+                                </button>
+                                <button onclick="return(comfirm('Are you sure to delete?'))" class="btn btn-danger">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
 

@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dfd1ee43-e5dd-418d-94ee-103bcbf6dce9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/item_images/My item_0.89668800 1559155395_jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/item_images/Some reak item_0.90041300 1559155086_jpg" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/item_images/Anchor live karaoke monitor headphones MP3 subwoofer 3 meter line long sound card recording universal headset factory direct sales_007586600 1559173581.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/item_images/In Zhuo GS100 esports game vibration headset headset computer headset with microphone subwoofer USB7.1_012630600 1559173945.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/item_images/Item 3_091441600 1559172647.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/item_images/Some reak item_030936000 1559172629.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/item_images/Spot factory direct in-ear double-motion sports headset line control with wheat call smart phone headset_044907800 1559173861.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1688-items.sql" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/item_images/Item 3_0.29016500 1559167163.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/item_images/Some reak item_0.09200500 1559172402.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <ignored path="1688-items.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,10 +32,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36619717">
+            <state vertical-scroll-proportion="-8.0">
               <caret line="82" column="34" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="34" />
               <folding>
                 <marker date="1559172575912" expanded="true" signature="4314:4516" placeholder="INSERT INTO items..." />
@@ -66,6 +71,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="1688-items.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/1688-items.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.40597016">
+              <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -81,6 +96,7 @@
         <option value="$PROJECT_DIR$/include/DB_Helper.php" />
         <option value="$PROJECT_DIR$/include/all_validations.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/1688-items.sql" />
       </list>
     </option>
   </component>
@@ -216,13 +232,13 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14750378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14750378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33011273" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -331,7 +347,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36619717">
+        <state vertical-scroll-proportion="-8.0">
           <caret line="82" column="34" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="34" />
           <folding>
             <marker date="1559172575912" expanded="true" signature="4314:4516" placeholder="INSERT INTO items..." />
@@ -363,6 +379,14 @@
             <marker date="1559172575912" expanded="true" signature="18051:18104" placeholder="..." />
             <marker date="1559172575912" expanded="true" signature="18051:20598" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1688-items.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40597016">
+          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -62,6 +62,7 @@ $db = new DB_Helper();
 
                     $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
                     $sku = "ESH" . str_ireplace(".", "", microtime()); // Generating our SKU
+                    $sku = str_ireplace(" ", "", $sku);
 
                     $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
                     $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
@@ -80,7 +81,7 @@ $db = new DB_Helper();
 
                     $extensions = array("jpeg", "jpg", "png", "gif", "svg");
 
-                    $finalFileName = mysqli_real_escape_string($db->conn, $fileName) . "_" .str_ireplace(".", "", microtime()) . "." . $file_ext;
+                    $finalFileName = str_ireplace(".", "", microtime()) . "." . $file_ext;
                     $finalFilePath = "item_images/" . $finalFileName;
 
                     if (in_array($file_ext, $extensions) === false) {
@@ -139,6 +140,7 @@ $db = new DB_Helper();
 
                     $fileName = mysqli_real_escape_string($db->conn, $_POST['item-name']);
                     $sku = "ESH" . str_ireplace(".", "", microtime());
+                    $sku = str_ireplace(" ", "", $sku);
                     $itemURL1688 = mysqli_real_escape_string($db->conn, $_POST['item-url-1688']);
                     $price1688 = mysqli_real_escape_string($db->conn, $_POST['price-1688']);
                     $weightKG = mysqli_real_escape_string($db->conn, $_POST['weight-kg']);
@@ -192,7 +194,7 @@ WHERE id = '$item_id'
 
                     $extensions = array("jpeg", "jpg", "png", "gif", "svg");
 
-                    $finalFileName = mysqli_real_escape_string($db->conn, $fileName) . "_" .str_ireplace(".", "", microtime()) . "." . $file_ext;
+                    $finalFileName = str_ireplace(".", "", microtime()) . "." . $file_ext;
                     $finalFilePath = "item_images/" . $finalFileName;
 
                     if (in_array($file_ext, $extensions) === false) {
